@@ -16,6 +16,13 @@
 </template>
 <!--
 
+      <!-- <button @click="onAddRow()">افزودن</button>
+      <button @click="getRowData()">Get Row Data</button>
+      <button @click="onInsertRowAt2()">Insert Row @ 2</button>
+      <button @click="updateItems()">Update First 5</button>
+      <button @click="clearData()">Clear Data</button>
+      <button @click="addItemsAtIndex()">Add Items @ 2</button>-->
+
 setDataValue() {
       this.gridApi.forEachNode(function(rowNode) {
         rowNode.setDataValue("sickDays", randomInt());
