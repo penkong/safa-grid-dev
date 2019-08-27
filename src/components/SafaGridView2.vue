@@ -1,17 +1,43 @@
+<template>
+  <div class="safa-grid" :class="onLoadAlign" style="height: 100vh;">
+    <div class="button-row" style="margin-bottom: 5px;">
+      <button @click="onRemoveSelected()">حذف انتخاب شده</button>
+      <button @click="updateAndSort()">به روز رسانی</button>
+      <button @click="addRow()">افزودن ردیف</button>
+      <!-- <button @click="onAddRow()">افزودن</button>
+      <button @click="getRowData()">Get Row Data</button>
+      <button @click="onInsertRowAt2()">Insert Row @ 2</button>
+      <button @click="updateItems()">Update First 5</button>
+      <button @click="clearData()">Clear Data</button>
+      <button @click="addItemsAtIndex()">Add Items @ 2</button>-->
+    </div>
+    <ag-grid-vue
+      class="ag-theme-balham"
+      style=" height: calc(100% - 64px);"
+      rowSelection="multiple"
+      deltaRowDataMode="true"
+      :gridOptions="gridOptions"
+      :columnDefs="columnDefs"
+      :rowData="rowData"
+      :rowAnimation="true"
+      :rowClassRules="rowClassRules"
+      :getRowNodeId="getRowNodeId"
+      @grid-ready="onGridReady"
+    ></ag-grid-vue>
+  </div>
+</template>
 
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
 
 // helper functions help us to maintain clean code.
-import SafaChild from "./SafaChild";
 import { loadColumnsBaseOnProps } from "../helpers/loadColumnsBaseOnProps";
 
 export default {
   name: "SafaGridView",
   components: {
-    AgGridVue,
-    SafaChild
+    AgGridVue
   },
   props: {
     definedCols: {
@@ -134,9 +160,6 @@ export default {
       console.log("Row Data:");
       console.log(rowData);
     }
-  },
-  render(h) {
-    return h("div", h(SafaChild));
   }
 };
 </script>

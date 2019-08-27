@@ -1,17 +1,14 @@
-
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
 
 // helper functions help us to maintain clean code.
-import SafaChild from "./SafaChild";
 import { loadColumnsBaseOnProps } from "../helpers/loadColumnsBaseOnProps";
 
 export default {
   name: "SafaGridView",
   components: {
-    AgGridVue,
-    SafaChild
+    AgGridVue
   },
   props: {
     definedCols: {
@@ -95,7 +92,8 @@ export default {
   },
   methods: {
     onRemoveSelected() {
-      let selectedData = this.gridApi.getSelectedRows();
+      // let selectedData = this.gridApi.getSelectedRows();
+      let selectedData = this.ref.getSelectedRows();
       let res = this.gridApi.updateRowData({ remove: selectedData });
     },
     updateAndSort() {
@@ -121,7 +119,7 @@ export default {
       });
     },
     onGridReady(params) {
-      params.api.sizeColumnsToFit();
+      this.gridApi.sizeColumnsToFit();
     },
     updateFilter() {
       this.gridApi.refreshClientSideRowModel("filter");
@@ -135,8 +133,29 @@ export default {
       console.log(rowData);
     }
   },
-  render(h) {
-    return h("div", h(SafaChild));
+  render() {
+    return (
+      <div class="safa-grid" class={this.onLoadAlign} style="height: 100vh;">
+        <div class="button-row" style="margin-bottom: 5px;">
+          <button click={this.onRemoveSelected()}>حذف انتخاب شده</button>
+          <button click={this.updateAndSort()}>به روز رسانی</button>
+          <button click={this.addRow()}>افزودن ردیف</button>
+        </div>
+        <ag-grid-vue
+          class="ag-theme-balham"
+          style=" height: calc(100% - 64px);"
+          rowSelection="multiple"
+          deltaRowDataMode="true"
+          gridOptions={this.props.gridOptions}
+          columnDefs={this.props.columnDefs}
+          rowData={this.props.rowData}
+          rowAnimation="true"
+          rowClassRules={this.props.rowClassRules}
+          getRowNodeId={this.props.getRowNodeId}
+          onGridReady={this.onGridReady}
+        ></ag-grid-vue>
+      </div>
+    );
   }
 };
 </script>
